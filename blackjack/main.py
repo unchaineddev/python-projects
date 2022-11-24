@@ -67,7 +67,7 @@ def play_game():
 
         while pc_score < 17  and pc_score != 0:
             pc_cards.append(deal_card())
-            pc_score = calculate_score(pc_score)
+            pc_score = calculate_score(pc_cards)
 
         print(f"Your final hand {user_cards}, score is {user_score}")
         print(f"Opponent hand {pc_cards}, score is {pc_score}")
