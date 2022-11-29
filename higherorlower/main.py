@@ -42,7 +42,7 @@ def game():
 
         os.system("clear")
 
-        print(logo)
+        print(vs)
         if highest:
             score = score + 1
             print(f"You are correct, your current score is {score}")
