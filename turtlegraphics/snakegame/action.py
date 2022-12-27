@@ -3,7 +3,7 @@ from turtle import Turtle
 POSITIONS  = [(0,0),(-20,0), (-40,0)]
 MOVE_DIST = 20
 UP = 90
-DOWN = 270 
+DOWN = 270
 LEFT = 180
 RIGHT = 0
 
@@ -27,6 +27,13 @@ class Snake:
         s.goto(pos)
         self.body.append(s)
 
+    def reset(self):
+        for  snakebody in self.body:
+            snakebody.goto(1000,1000)
+        self.body.clear()
+        self.create_snake()
+        self.head = self.body[0]
+
 
     # increases the size of the snake  
     def size_increase(self):
@@ -39,22 +46,25 @@ class Snake:
             self.body[number].goto(x, y)
         self.head.forward(MOVE_DIST)
 
+
     def up(self):
         if self.head.heading() != DOWN:
             self.head.setheading(UP)
-    
+
+
     def down(self):
         if self.head.heading() != UP:
             self.head.setheading(DOWN)
-    
+
+
     def left(self):
         if self.head.heading() != RIGHT:
             self.head.setheading(LEFT)
-    
+
+
     def right(self):
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
-           
 
 
 
