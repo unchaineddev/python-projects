@@ -22,11 +22,13 @@ guessed_state = []
 while len(guessed_state) <50:
     # Prompt to ask user input
     answer = screen.textinput(title=f"{len(guessed_state)} out of 50 States",prompt="Guess a State? ").title()
+
     if answer == "Exit":
-        missing_states = []
-        for state in allstates:
-            if state not in guessed_state:
-                missing_states.append(state)
+        missing_states = [state for state in allstates if state not in guessed_state]
+#       missing_states = []
+#       for state in allstates:
+#            if state not in guessed_state:
+#                missing_states.append(state)
         new_data= pd.DataFrame(missing_states)
         new_data.to_csv("states_to_learn.csv")
         break
