@@ -1,4 +1,55 @@
 from tkinter import *
+from tkinter import messagebox
+import random
+import pyperclip #copy and paste from clipboard
+
+# GENERATE PASSWORD
+def generate_pass():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_letters = [random.choice(letters) for _ in range(nr_letters)]
+    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+
+    password_list = password_symbols + password_numbers + password_letters
+    random.shuffle(password_list)
+
+    # Use Join Method
+
+    password = "".join(password_list)
+    passwd_entry.insert(0, password)
+    pyperclip.copy(password)
+#password = ""
+#for char in password_list:
+#  password += char
+#
+#print(f"Your password is: {password}")
+
+
+
+# dont forget to add the command in Add button 
+def save_data():
+    site_data = name_entry.get()
+    name_data = user_name_entry.get()
+    pass_data = passwd_entry.get()
+
+    if len(site_data) == 0 or len(name_data) == 0 or pass_data == 0:
+        messagebox.showinfo(title="Oops", message="Oops, some fields are empty")
+    else:
+        is_ok = messagebox.askokcancel(title=site_data, message=f"Details you you have entered. \n Website: {site_data},\n Email: {name_data}, \n Password: {pass_data}\n Is it okay to save? ")
+        if is_ok:
+            with open("data.txt", "a") as datafile:
+                datafile.write(f"{site_data},{name_data},{pass_data}\n")
+                name_entry.delete(0,END)
+                user_name_entry.delete(0,END)
+                passwd_entry.delete(0,END)
+
 
 # User Interface 
 
@@ -27,18 +78,20 @@ passwd.grid(column=0,row=3)
 
 name_entry = Entry(width=35)
 name_entry.grid(row=1, column=1,columnspan=2)
+name_entry.focus()
 user_name_entry = Entry(width=35)
 user_name_entry.grid(row=2,column=1,columnspan=2)
+user_name_entry.insert(0,"john@doe.com")
 passwd_entry = Entry(width=24)
 passwd_entry.grid(row=3,column=1)
 
 
 # Buttons
 
-gen_passwd = Button(text="Generate")
+gen_passwd = Button(text="Generate", command=generate_pass)
 gen_passwd.grid(row=3,column=2,columnspan=1)
 
-add_button = Button(text="Add",width=34)
+add_button = Button(text="Add",width=34,command=save_data)
 add_button.grid(row=4,column=1,columnspan=2)
 
 window.mainloop()
