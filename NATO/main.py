@@ -13,8 +13,14 @@ data = pandas.read_csv("./nato_phonetic_alphabet.csv")
 # Creating Dict in form of K,V pair
 phonetic_dict = {row.letter:row.code for (index, row) in data.iterrows()}
 
+def phonetic():
+    word = input("enter a word: ").upper()
+    try:
+        output = [phonetic_dict[letter] for letter in word]
+    except KeyError:
+        print("Sorry only alphabets are allowed!")
+        phonetic()
+    else:
+        print(output)
 
-word = input("enter a word: ").upper()
-
-output = [phonetic_dict[letter] for letter in word]
-print(output)
+phonetic()
