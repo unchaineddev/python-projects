@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip #copy and paste from clipboard
+import json
 
 # GENERATE PASSWORD
 def generate_pass():
@@ -38,18 +39,31 @@ def save_data():
     site_data = name_entry.get()
     name_data = user_name_entry.get()
     pass_data = passwd_entry.get()
+    new_data = {
+            site_data: {
+                "email": name_data,
+                "password": pass_data,
+                }
+            }
 
     if len(site_data) == 0 or len(name_data) == 0 or pass_data == 0:
         messagebox.showinfo(title="Oops", message="Oops, some fields are empty")
     else:
-        is_ok = messagebox.askokcancel(title=site_data, message=f"Details you you have entered. \n Website: {site_data},\n Email: {name_data}, \n Password: {pass_data}\n Is it okay to save? ")
-        if is_ok:
-            with open("data.txt", "a") as datafile:
-                datafile.write(f"{site_data},{name_data},{pass_data}\n")
-                name_entry.delete(0,END)
-                user_name_entry.delete(0,END)
-                passwd_entry.delete(0,END)
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)
 
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+        finally:
+            user_name_entry.delete(0, END)
+            name_entry.delete(0, END)
+            passwd_entry.delete(0, END)
 
 # User Interface 
 
