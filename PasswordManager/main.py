@@ -65,6 +65,25 @@ def save_data():
             name_entry.delete(0, END)
             passwd_entry.delete(0, END)
 
+
+# Find Password 
+
+def find_password():
+    website = name_entry.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No data found")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=user_name, message=f"Email:{email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="err", message=f'No details for "{website}" exits')
+
+
 # User Interface 
 
 window = Tk()
@@ -90,13 +109,13 @@ passwd.grid(column=0,row=3)
 
 # Entries
 
-name_entry = Entry(width=35)
-name_entry.grid(row=1, column=1,columnspan=2)
+name_entry = Entry(width=25)
+name_entry.grid(row=1, column=1)
 name_entry.focus()
 user_name_entry = Entry(width=35)
 user_name_entry.grid(row=2,column=1,columnspan=2)
 user_name_entry.insert(0,"john@doe.com")
-passwd_entry = Entry(width=24)
+passwd_entry = Entry(width=26)
 passwd_entry.grid(row=3,column=1)
 
 
@@ -107,5 +126,10 @@ gen_passwd.grid(row=3,column=2,columnspan=1)
 
 add_button = Button(text="Add",width=34,command=save_data)
 add_button.grid(row=4,column=1,columnspan=2)
+
+
+search = Button(text="Search",width=8, command=find_password)
+search.grid(row=1, column =2 )
+
 
 window.mainloop()

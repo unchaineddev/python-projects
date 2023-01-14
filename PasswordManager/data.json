@@ -6,5 +6,9 @@
     "website2": {
         "email": "john@doe.com",
         "password": "Inw05!I&Mz5!IL5"
+    },
+    "ebay": {
+        "email": "john@doe.com",
+        "password": "*bw01Q+02THjU!W123456"
     }
 }
