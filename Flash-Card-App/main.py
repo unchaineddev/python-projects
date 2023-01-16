@@ -8,10 +8,19 @@ import pandas as pd
 import random
 
 
-# Using Pandas to open the CSV file
-data = pd.read_csv("./data/words.csv")
-to_learn = data.to_dict(orient="records")
 card = {}
+to_learn = {}
+
+
+# Using Pandas to open the CSV file
+try:
+    data = pd.read_csv("./data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pd.read_csv("./data/words.csv")
+    to_learn = original_data.to_dict(orient="records")
+else:
+    to_learn = data.to_dict(orient="records")
+
 
 # Function to flip the card
 def next_card():
@@ -30,6 +39,14 @@ def flip_card():
     canvas.itemconfig(card_word, text=card["English"], fill="white")
     canvas.itemconfig(canvas_img, image=back_img)
 
+
+# If card is known, you can select the tick and it will be removed from the list
+def known_card():
+    to_learn.remove(card)
+    #print(len(to_learn))
+    next_card()
+    data = pd.DataFrame(to_learn)
+    data.to_csv("./data/words_to_learn.csv", index=False)
 
 
 # Create Window
@@ -65,7 +82,7 @@ wrong.grid(row=1, column = 0)
 
 
 tick = PhotoImage(file="./images/right.png")
-right = Button(image = tick, highlightthickness=0, command=next_card)
+right = Button(image = tick, highlightthickness=0, command=known_card)
 right.grid(row=1, column = 1)
 
 
