@@ -1,0 +1,9 @@
+Dear [NAME],
+
+It's your birthday! Have a great day!
+
+All my love,
+
+Yusuf
+
+Do-not-reply. This is an automated message sent using Python. 

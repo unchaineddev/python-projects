@@ -1,0 +1,10 @@
+Dear [NAME],
+
+Happy birthday!
+
+All the best for the year!
+
+Yusuf
+
+
+Do-not-reply. This is an automated email sent using python. 
