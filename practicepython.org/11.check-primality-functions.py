@@ -1,9 +1,17 @@
-# Ask the user for a number and determine whether the number is prime or not. 
-# (For those who have forgotten, a prime number is a number that has no divisors.). 
+# Ask the user for a number and determine whether the number is prime or not.
+# prime number is a number that has no divisors.
 
-def check_prime():
-    return int(input("Enter a number to check if it is prime: "))
+n = int(input("Enter a number: "))
 
-n = check_prime()
-print(n)
+values = [i for i in range(2, n) if n % i == 0]
+
+def check_prime(n):
+    if n > 1 and len(values) == 0:
+        return f"{n} is a prime number."
+    else:
+        print(f"{n} is not a prime number.")
+
+res = check_prime(n)
+print(res)
+
 
